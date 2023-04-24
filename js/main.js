@@ -247,13 +247,8 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
                 display: block;
                 margin: 0 auto;
             `;
-            // form.append(statusMessage);
+            
             form.insertAdjacentElement('afterend', statusMessage);
-
-            // const request = new XMLHttpRequest();
-            // request.open('POST', 'server.php');
-
-            // request.setRequestHeader('Content-type','application/json');
 
             const formData = new FormData(form);
 
@@ -261,10 +256,6 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
             formData.forEach(function(value, key) {
                 object[key] = value;
             });
-
-           
-
-            // request.send(json);
 
             fetch('server.php', {
                 method: "POST",
@@ -283,17 +274,6 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
             }).finally(() => {
                 form.reset();
             })
-
-            // request.addEventListener('load', () => {
-            //     if(request.status === 200) {
-            //         console.log(request.response)
-            //         showThinksMOdal(messege.success);
-            //         form.reset();
-            //         statusMessage.remove();
-            //     } else {
-            //         showThinksMOdal(messege.failure);
-            //     }
-            // })
         });
     }
 
