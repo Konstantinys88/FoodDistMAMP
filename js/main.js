@@ -250,10 +250,11 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
             // form.append(statusMessage);
             form.insertAdjacentElement('afterend', statusMessage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
+            // const request = new XMLHttpRequest();
+            // request.open('POST', 'server.php');
 
-            request.setRequestHeader('Content-type','application/json');
+            // request.setRequestHeader('Content-type','application/json');
+
             const formData = new FormData(form);
 
             const object = {};
@@ -261,19 +262,38 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
                 object[key] = value;
             });
 
-            const json = JSON.stringify(object);
+           
 
-            request.send(json);
-            request.addEventListener('load', () => {
-                if(request.status === 200) {
-                    console.log(request.response)
-                    showThinksMOdal(messege.success);
-                    form.reset();
-                    statusMessage.remove();
-                } else {
-                    showThinksMOdal(messege.failure);
-                }
+            // request.send(json);
+
+            fetch('server.php', {
+                method: "POST",
+                headers: {
+                    'contetn-type':'application/json'
+                },  
+                body: JSON.stringify(object)
+            }).then(data => data.text())
+            .then(data => {
+                console.log(data);
+                showThinksMOdal(messege.success);
+                form.reset();
+                statusMessage.remove();
+            }).catch(() => {
+                showThinksMOdal(messege.failure);
+            }).finally(() => {
+                form.reset();
             })
+
+            // request.addEventListener('load', () => {
+            //     if(request.status === 200) {
+            //         console.log(request.response)
+            //         showThinksMOdal(messege.success);
+            //         form.reset();
+            //         statusMessage.remove();
+            //     } else {
+            //         showThinksMOdal(messege.failure);
+            //     }
+            // })
         });
     }
 
@@ -300,3 +320,5 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         }, 4000)
     }
 });
+
+
