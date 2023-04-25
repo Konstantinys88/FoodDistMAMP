@@ -203,9 +203,16 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         return await res.json();
     }  
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    // .then(data => {
+    //     data.forEach(({img, altimg, title, descr, price}) => {
+    //         new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //     });
+    // });
+
+    axios.get('http://localhost:3000/menu')
     .then(data => {
-        data.forEach(({img, altimg, title, descr, price}) => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {
             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
         });
     });
@@ -293,6 +300,52 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
             closeModal();
         }, 4000)
     }
+
+    //Slider
+
+    const slides = document.querySelectorAll('.offer__slide'),
+    prev = document.querySelector('.offer__slider-prev'),
+    next = document.querySelector('.offer__slider-next'),
+    total = document.querySelector('#total'),
+    current = document.querySelector('#current');
+    let slideIndex = 1;
+
+    showSlidex(slideIndex);
+
+    if(slides.length < 10) {
+        total.textContent = `0${slides.length}`
+    } else {
+        total.textContent = `${slides.length}`
+    }
+
+    function showSlidex(n) {
+        if(n > slides.length) {
+            slideIndex = 1;
+        } 
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+        slides.forEach((item) => item.style.display = 'none');
+        slides[slideIndex - 1].style.display = 'block';
+
+        if(slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    function plusSlides(n) {
+        showSlidex(slideIndex += n);
+    }
+
+    prev.addEventListener('click', () => {
+        plusSlides(-1);
+    });
+
+    next.addEventListener('click', () => {
+        plusSlides(1);
+    })
 
 });
 
