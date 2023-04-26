@@ -336,11 +336,15 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         slide.style.width = width
     });
 
+    function deliteNotDigits(str) {
+        return +str.replace(/\D/g, '');
+    }
+
     next.addEventListener('click', () => {
-        if(ofset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
+        if(ofset == deliteNotDigits(width) * (slides.length - 1)) {
             ofset = 0;
         } else {
-            ofset += +width.slice(0, width.length - 2);
+            ofset += deliteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${ofset}px)`;
 
@@ -362,9 +366,9 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
 
     prev.addEventListener('click', () => {
         if(ofset == 0) {
-            ofset = +width.slice(0, width.length - 2) * (slides.length - 1)
+            ofset = deliteNotDigits(width) * (slides.length - 1)
         } else {
-            ofset -= +width.slice(0, width.length - 2);
+            ofset -= deliteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${ofset}px)`;
 
@@ -448,7 +452,7 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
             const slideTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = slideTo;
-            ofset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            ofset = deliteNotDigits(width) * (slideTo - 1);
 
             slidesField.style.transform = `translateX(-${ofset}px)`;
 
