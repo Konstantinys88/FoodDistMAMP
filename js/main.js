@@ -304,13 +304,15 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
     //Slider
 
     const slides = document.querySelectorAll('.offer__slide'),
-    prev = document.querySelector('.offer__slider-prev'),
-    next = document.querySelector('.offer__slider-next'),
-    total = document.querySelector('#total'),
-    current = document.querySelector('#current'),
-    slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-    slidesField = document.querySelector('.offer__slider-inner'),
-    width = window.getComputedStyle(slidesWrapper).width;
+        slider = document.querySelector('.offer__slider'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current'),
+        slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+        slidesField = document.querySelector('.offer__slider-inner'),
+        width = window.getComputedStyle(slidesWrapper).width;
+        
     let slideIndex = 1;
     let ofset = 0;
 
@@ -353,6 +355,9 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         } else {
             current.textContent = slideIndex;
         }
+
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
 
     prev.addEventListener('click', () => {
@@ -374,9 +379,10 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         } else {
             current.textContent = slideIndex;
         }
+
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
-
-
 
     // простой слайдер-----------------------------------------------------------------
 
@@ -416,6 +422,46 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
     // next.addEventListener('click', () => {
     //     plusSlides(1);
     // })
+
+
+    // точки ---- в слайдере
+    slider.style.position = 'relative';
+
+    const indicators = document.createElement('ol'),
+        dots = [];
+    indicators.classList.add('carousel-indicators');
+    slider.append(indicators);
+
+    for(let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('li');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        if(i == 0) {
+            dot.style.opacity = 1;
+        }
+        indicators.append(dot);
+        dots.push(dot);
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+
+            slideIndex = slideTo;
+            ofset = +width.slice(0, width.length - 2) * (slideTo - 1);
+
+            slidesField.style.transform = `translateX(-${ofset}px)`;
+
+            if(slides.length < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }
+
+            dots.forEach(dot => dot.style.opacity = '.5');
+            dots[slideIndex - 1].style.opacity = 1;
+        });
+    });
 
 
 
