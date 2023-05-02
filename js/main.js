@@ -1,7 +1,8 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', () => {
-// Tabs
+
+    // Tabs
     const tabs = document.querySelectorAll(".tabheader__item"),
         tabsContent = document.querySelectorAll(".tabcontent"),
         tabsParent = document.querySelector(".tabheader__items");
@@ -217,7 +218,7 @@ const modaltrigger = document.querySelectorAll('[data-modal]'),
         });
     });
 
-    //Forms
+    //Forms Урок 90
 
     const forms = document.querySelectorAll('form');
 
