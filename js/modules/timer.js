@@ -1,6 +1,5 @@
-function timer() {
-    const deadline = "2024-04-22";
-
+function timer(id, deadline) {
+    
     function getTimeRemaiming(endtime) {
         let days, hours, minutes, seconds;
 
@@ -31,7 +30,7 @@ function timer() {
         if (num >= 0 && num < 0) {
             return `0${num}`;
         } else {
-            return num
+            return num;
         }
     }
 
@@ -61,8 +60,8 @@ function timer() {
         }
     }
 
-    setClock(".timer", deadline);
+    setClock(id, deadline);
 
 }
 
-module.exports = timer;
+export default timer;
